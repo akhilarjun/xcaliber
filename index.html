@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-size: 0px;
+            font-family: calibri;
+        }
+        .container{
+            display: grid;
+            grid-template-columns: 56px auto;
+        }
+        input{
+            width: 100%;
+            padding: 15px 10px;
+            border: 1px solid #0af;
+            font-size: 20px;
+            outline: none;
+        }
+        .helper{
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            padding: 10px;
+            display: block;
+        }
+        .helper.show{
+            display: block;
+        }
+        body{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body style="-webkit-app-region: drag; background: transparent;">
+    <div class="container">
+        <div>
+            <img src="xcaliber.png" height="56px" width="auto"/>
+        </div>
+        <div>
+            <input type="text" placeholder="Hola!" style="-webkit-app-region: no-drag;" id="searchbar" autofocus>
+        </div>
+    </div>
+    <div class="helper">
+        Please Wait! Fetching your Apps...
+    </div>
+    <script>
+        var {remote} = require('electron');
+        var main = remote.require("./main.js");
+        var find = require('find');
+        var applications, sortedApps;
+        document.querySelector("#searchbar").addEventListener("input", () => {
+            if(document.querySelector("#searchbar").value){
+                main.includeResults();
+                findApps();
+            } else {
+                main.shrinkToOriginalSize();
+            }
+        });
+        if(!applications){
+            find.file(/\.exe$/, "C:\\Program Files\\", function(files) {
+                applications = files;
+            }).error((error) => {
+                //Exclude Files that cannot be indexed
+            });
+        }
+    </script>
+</body>
+</html>

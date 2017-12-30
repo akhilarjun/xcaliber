@@ -1,0 +1,8 @@
+{
+    "name": "xcaliber",
+    "version": "1.0",
+    "main": "main.js",
+    "dependencies": {
+        "find": "^0.2.7"
+    }
+}
